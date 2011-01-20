@@ -64,7 +64,24 @@ end
 
 def parse_config( config )
 	conf_file = File.new( config, "r" )
-	while true
-		line = conf_file.gets
-		if line.include?( "a+" )
-			line_name = line[ 3..( line.length - 1 ) ]
+	contents = {}
+	while line = conf_file.gets
+		
+		if line.include( "a~" )
+			title = line[ 3 .. ( line.length - 1 ) ]
+			contents[ "title" ] = []
+			while true
+				if line.include?( "~" )
+					break
+				end
+				line = conf_file.gets
+				contents[ "title" ].push( line[ 0 .. ( line.length - 2 )
+			end
+		elsif line.include( "s~" )
+			title = line[ 3 .. ( line.length - 1) ]
+			while true
+				if line.include?( "~" )
+					break
+				end
+				line = conf_file.gets
+				
