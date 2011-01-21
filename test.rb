@@ -1,3 +1,4 @@
+require 'yaml'
 class Item
 	attr_reader :type
 	def initialize( type = nil )
@@ -62,26 +63,15 @@ class Player < Creature
 	end
 end
 
-def parse_config( config )
-	conf_file = File.new( config, "r" )
-	contents = {}
-	while line = conf_file.gets
-		
-		if line.include( "a~" )
-			title = line[ 3 .. ( line.length - 1 ) ]
-			contents[ "title" ] = []
-			while true
-				if line.include?( "~" )
-					break
-				end
-				line = conf_file.gets
-				contents[ "title" ].push( line[ 0 .. ( line.length - 2 )
-			end
-		elsif line.include( "s~" )
-			title = line[ 3 .. ( line.length - 1) ]
-			while true
-				if line.include?( "~" )
-					break
-				end
-				line = conf_file.gets
-				
+class Map
+	attr_reader :conf
+	def initialize( mapfile = nil )
+		if mapfile
+			@conf = YAML.load_file( mapfile )
+		end
+	end
+	def to_s
+		return @conf["map"].join("")
+	end
+end
+
